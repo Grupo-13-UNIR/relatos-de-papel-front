@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from 'react';
 import { AuthContext, type User } from '@/context/auth/AuthContext';
+import { useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -8,11 +8,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (data: User) => {
     setUser(data);
-    navigate('/secret');
   };
   const logout = () => {
     setUser(null);
-    navigate('/', { replace: true });
+    navigate('/');
   };
   return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
 };

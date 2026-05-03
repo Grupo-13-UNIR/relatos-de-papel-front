@@ -6,7 +6,7 @@ export interface User {
 }
 interface AuthContextType {
   user: User | null;
-  login: (user: User, callback: VoidFunction) => Promise<void>;
+  login: (user: User, callback: VoidFunction) => void;
   logout: (callback: VoidFunction) => void;
 }
 export const AuthContext = createContext<AuthContextType | null>(null);
