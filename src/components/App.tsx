@@ -7,10 +7,13 @@ import Cart from '@/components/Cart/Cart';
 import Profile from '@/components/Profile/Profile';
 import { useEffect } from 'react';
 import { AuthProvider } from '@/context/auth/AuthProvider';
+import { PrivateRoute } from '@/components/PivateRoute/PrivateRoute';
 
 function App() {
+  console.log('App render');
   useEffect(() => {
     if (import.meta.env.DEV) {
+      console.log('Loading React Scan script...');
       const script = document.createElement('script');
       script.src = '//unpkg.com/react-scan/dist/auto.global.js';
       script.crossOrigin = 'anonymous';
@@ -22,23 +25,37 @@ function App() {
       };
     }
   }, []);
+  console.log(import.meta.env.DEV + ' React Scan script loaded');
+  console.log('Loading React Scan script...');
 
   return (
     <>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/">
-              <Route index element={<Home />} />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/">
+            <Route index element={<Home />} />
+            <Route path="register" element={<Register />} />
+            <Route path="products" element={<Products />} />
+            <Route
+              path="cart"
+              element={
+                <PrivateRoute>
+                  <Cart />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
