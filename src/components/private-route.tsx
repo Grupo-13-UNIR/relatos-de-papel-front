@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { useAuth } from '@/context/auth/AuthContext';
+import { useAuth } from '@/context/auth/AuthContext.tsx';
 import { Navigate, useLocation } from 'react-router';
 
 export const PrivateRoute = ({ children }: { children: ReactNode }) => {
