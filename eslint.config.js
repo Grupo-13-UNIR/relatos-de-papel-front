@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint';
 import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', '.agents']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -30,7 +30,6 @@ export default defineConfig([
         'error',
         {
           allowSameFolder: false,
-          rootDir: 'src',
           prefix: '@/',
         },
       ],
