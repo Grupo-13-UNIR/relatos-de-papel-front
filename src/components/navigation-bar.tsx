@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { Input } from '@/components/ui/input.tsx';
 import { ProfileAvatar } from '@/components/profile-avatar.tsx';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
+import { ModeToggle } from '@/components/mode-toggle';
 
 export interface NavigationBarProps {
   showSearch: boolean;
@@ -35,6 +36,9 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
       </div>
       <div>
         <ProfileAvatar user={user} onLogin={() => navigate('/login')} onLogout={onLogout} />
+      </div>
+      <div>
+        <ModeToggle />
       </div>
     </div>
   );
