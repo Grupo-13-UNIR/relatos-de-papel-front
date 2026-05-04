@@ -7,7 +7,7 @@ import Cart from '@/views/Cart.tsx';
 import Profile from '@/views/Profile.tsx';
 import { type JSX, useEffect } from 'react';
 import { AuthProvider } from '@/context/auth/AuthProvider.tsx';
-import Catalogue from '@/views/Catalogue.tsx';
+import Catalogue from '@/views/Catalogue';
 import { ViewLayout } from '@/components/view-layout.tsx';
 import { PrivateRoute } from '@/components/private-route.tsx';
 
