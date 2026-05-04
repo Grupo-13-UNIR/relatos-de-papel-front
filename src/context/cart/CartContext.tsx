@@ -1,16 +1,18 @@
-import { createContext, useContext } from 'react';
-import type { Book } from '@/types/book.ts';
+import { createContext, useContext } from "react";
+import type { CartItem } from "@/types/cartItem";
 
-interface CartContextType {
-  cart: Record<string, { book: Book; quantity: number }>;
-  onChangeCartQuantity: (book: Book, quantity: number) => void;
-}
+export type CartContextType = {
+  items: CartItem[];
+  addItem: (item: CartItem) => void;
+  removeItem: (id: string) => void;
+};
 
-export const CartContext = createContext<CartContextType>({
-  cart: {},
-  onChangeCartQuantity: (book, quantity) => {},
-});
+export const CartContext = createContext<CartContextType | null>(null);
 
 export const useCart = () => {
-  return useContext(CartContext);
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used inside CartProvider");
+  }
+  return context;
 };

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { Input } from '@/components/ui/input.tsx';
 import { ProfileAvatar } from '@/components/profile-avatar.tsx';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
+import { useCart } from '@/context/cart/CartContext'; 
 
 export interface NavigationBarProps {
   showSearch: boolean;
@@ -33,6 +34,10 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
           Catálogo
         </Link>
       </div>
+      <div className="relative cursor-pointer" onClick={() => navigate('/cart')}>
+        <span className="text-xl">🛒</span>
+      </div>
+
       <div>
         <ProfileAvatar user={user} onLogin={() => navigate('/login')} onLogout={onLogout} />
       </div>
