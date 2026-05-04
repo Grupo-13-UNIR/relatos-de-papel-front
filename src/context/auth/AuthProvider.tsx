@@ -1,4 +1,5 @@
-import { AuthContext, type User } from '@/context/auth/AuthContext';
+import { AuthContext } from '@/context/auth/AuthContext';
+import type { User } from '@/types/user';
 import { useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 
