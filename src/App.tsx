@@ -1,15 +1,17 @@
-import Home from '@/views/Home.tsx';
-import { BrowserRouter, Route, Routes } from 'react-router';
-import Login from '@/views/Login.tsx';
-import Register from '@/views/Register.tsx';
-import Products from '@/views/Products.tsx';
-import Cart from '@/views/Cart.tsx';
-import Profile from '@/views/Profile.tsx';
-import { type JSX, useEffect } from 'react';
-import { AuthProvider } from '@/context/auth/AuthProvider.tsx';
-import Catalogue from '@/views/Catalogue';
-import { ViewLayout } from '@/components/view-layout.tsx';
 import { PrivateRoute } from '@/components/private-route.tsx';
+import { ThemeProvider } from '@/components/theme-provider';
+import { ViewLayout } from '@/components/view-layout.tsx';
+import { AuthProvider } from '@/context/auth/AuthProvider.tsx';
+import Cart from '@/views/Cart.tsx';
+import Catalogue from '@/views/Catalogue';
+import Home from '@/views/Home.tsx';
+import Login from '@/views/Login.tsx';
+import NotFound from '@/views/NotFound.tsx';
+import Products from '@/views/Products.tsx';
+import Profile from '@/views/Profile.tsx';
+import Register from '@/views/Register.tsx';
+import { type JSX, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router';
 
 interface RouteElement {
   path: string;
@@ -74,30 +76,40 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            {routeElements.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={
-                  route.privateRoute ? (
-                    <PrivateRoute>
+        <ThemeProvider storageKey="ui-theme">
+          <AuthProvider>
+            <Routes>
+              {routeElements.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={
+                    route.privateRoute ? (
+                      <PrivateRoute>
+                        <ViewLayout showSearch={route.showSearch ?? false}>
+                          {route.component}
+                        </ViewLayout>
+                      </PrivateRoute>
+                    ) : (
                       <ViewLayout showSearch={route.showSearch ?? false}>
                         {route.component}
                       </ViewLayout>
-                    </PrivateRoute>
-                  ) : (
-                    <ViewLayout showSearch={route.showSearch ?? false}>
-                      {route.component}
-                    </ViewLayout>
-                  )
+                    )
+                  }
+                  index={route.index}
+                />
+              ))}
+              <Route
+                path="*"
+                element={
+                  <ViewLayout showSearch={false}>
+                    <NotFound />
+                  </ViewLayout>
                 }
-                index={route.index}
               />
-            ))}
-          </Routes>
-        </AuthProvider>
+            </Routes>
+          </AuthProvider>
+        </ThemeProvider>
       </BrowserRouter>
     </>
   );
