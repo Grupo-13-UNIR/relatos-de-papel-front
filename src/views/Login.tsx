@@ -4,23 +4,32 @@ import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
 import { userService } from '@/services/user-service.ts';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { FieldGroup, Field, FieldLabel, FieldDescription } from '@/components/ui/field';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { onLogin } = useContext(AuthContext);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    setError('');
+    setError(null);
     setLoading(true);
 
     try {
-      const user = await userService.login({ username, password });
+      const user = await userService.login({
+        email: formData.email,
+        password: formData.password,
+      });
       onLogin(user);
       navigate('/');
     } catch (err) {
@@ -31,58 +40,62 @@ export default function Login() {
   };
 
   return (
-    <div className="h-full flex items-center justify-center bg-linear-to-br from-gray-50 to-gray-100 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Bienvenido</h1>
-          <p className="text-gray-600">Inicia sesión en tu cuenta</p>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-              {error}
-            </div>
-          )}
-          <div className="space-y-2">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-              Usuario
-            </label>
-            <Input
-              id="username"
-              type="text"
-              placeholder="Usuario"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              disabled={loading}
-              className="w-full"
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Contraseña
-            </label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={loading}
-              className="w-full"
-            />
-          </div>
-          <Button type="submit" disabled={loading} className="w-full" size="lg">
-            {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-          </Button>
-        </form>
-        <p className="text-center text-sm text-gray-600 mt-4">
-          ¿No tienes cuenta?
-          <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium ml-2">
-            Regístrate aquí
-          </Link>
-        </p>
+    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle className="text-xl">Bienvenido de nuevo</CardTitle>
+            <CardDescription>Inicia sesión con tu cuenta</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              <FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="example@example.com"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </Field>
+                <Field>
+                  <div className="flex items-center">
+                    <FieldLabel htmlFor="password">Contraseña</FieldLabel>
+                    <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
+                      ¿Olvidaste tu contraseña?
+                    </a>
+                  </div>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="Contraseña"
+                    required
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
+                </Field>
+                {error && <div className="text-red-600">{error}</div>}
+                <Field>
+                  <Button type="submit" disabled={loading}>
+                    {loading ? 'Cargando...' : 'Iniciar sesión'}
+                  </Button>
+                  <FieldDescription className="text-center">
+                    ¿No tienes una cuenta? <Link to="/register">Regístrate</Link>
+                  </FieldDescription>
+                </Field>
+              </FieldGroup>
+            </form>
+          </CardContent>
+        </Card>
+        <FieldDescription className="px-6 text-center">
+          Al hacer clic en continuar, aceptas nuestros <a href="#">Términos de Servicio</a> y{' '}
+          <a href="#">Política de Privacidad</a>.
+        </FieldDescription>
       </div>
     </div>
   );

@@ -4,13 +4,18 @@ import { useContext, useState, type SubmitEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
 import { userService } from '@/services/user-service.ts';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { FieldGroup, Field, FieldLabel, FieldDescription } from '@/components/ui/field';
 
 export default function Register() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [password, setPassword] = useState('');
+  console.log('Renderizando Register');
+  const [formData, setFormData] = useState({
+    name: '',
+    lastname: '',
+    email: '',
+    password: '',
+  });
+
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,13 +23,30 @@ export default function Register() {
   const navigate = useNavigate();
   const { onLogin } = useContext(AuthContext);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }) as typeof prev);
+  };
+
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
+    if (formData.password !== confirmPassword) {
+      setError('Las contraseñas no coinciden');
+      setLoading(false);
+      return;
+    }
+
     try {
-      const user = await userService.register({ id: 0, username, email, name, lastname, password });
+      const user = await userService.register({
+        id: 0,
+        email: formData.email,
+        name: formData.name,
+        lastname: formData.lastname,
+        password: formData.password,
+      });
       onLogin(user);
       navigate('/');
     } catch (err) {
@@ -35,120 +57,102 @@ export default function Register() {
   };
 
   return (
-    <div className="h-full flex items-center justify-center bg-linear-to-br from-gray-50 to-gray-100 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Bienvenido</h1>
-          <p className="text-gray-600">Rellena los siguientes campos para crear tu cuenta</p>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-              {error}
-            </div>
-          )}
-          <div className="space-y-2">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-              Usuario
-            </label>
-            <Input
-              id="username"
-              type="text"
-              placeholder="Usuario"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              disabled={loading}
-              className="w-full"
-            />
-          </div>
-          <div className="flex space-y-2 flex-row gap-x-2">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Nombre
-              </label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Nombre"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                disabled={loading}
-                className="w-full"
-              />
-            </div>
-            <div>
-              <label htmlFor="lastname" className="block text-sm font-medium text-gray-700">
-                Apellido
-              </label>
-              <Input
-                id="lastname"
-                type="text"
-                placeholder="Apellido"
-                value={lastname}
-                onChange={(e) => setLastname(e.target.value)}
-                required
-                disabled={loading}
-                className="w-full"
-              />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="usuario@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={loading}
-              className="w-full"
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Contraseña
-            </label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={loading}
-              className="w-full"
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-              Confirmar contraseña
-            </label>
-            <Input
-              id="confirmPassword"
-              type="password"
-              placeholder="••••••••"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              disabled={loading}
-              className="w-full"
-            />
-          </div>
-          <Button type="submit" disabled={loading} className="w-full" size="lg">
-            {loading ? 'Registrando usuario...' : 'Registrar usuario'}
-          </Button>
-        </form>
-        <p className="text-center text-sm text-gray-600 mt-4">
-          ¿Ya tienes cuenta?
-          <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium ml-2">
-            Inicia sesión aquí
-          </Link>
-        </p>
+    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle className="text-xl">Crear una cuenta</CardTitle>
+            <CardDescription>
+              Ingresa tu información a continuación para crear tu cuenta
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              <FieldGroup>
+                <Field className="grid grid-cols-2 gap-4">
+                  <Field>
+                    <FieldLabel htmlFor="name">Nombre completo</FieldLabel>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      placeholder="Nombre"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="lastname">Apellido</FieldLabel>
+                    <Input
+                      id="lastname"
+                      name="lastname"
+                      type="text"
+                      placeholder="Apellido"
+                      required
+                      value={formData.lastname}
+                      onChange={handleChange}
+                    />
+                  </Field>
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="usuario@example.com"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                  <FieldDescription>
+                    Utilizaremos tu email para enviarte informacion importante, como restablecer tu
+                    contraseña.
+                  </FieldDescription>
+                </Field>
+                <Field className="grid grid-cols-2 gap-4">
+                  <Field>
+                    <FieldLabel htmlFor="password">Contraseña</FieldLabel>
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      required
+                      value={formData.password}
+                      onChange={handleChange}
+                    />
+                    <FieldDescription>Tiene que tener al menos 8 caracteres.</FieldDescription>
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="confirm-password">Confirmar Contraseña</FieldLabel>
+                    <Input
+                      id="confirm-password"
+                      name="confirm"
+                      type="password"
+                      required
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+
+                    <FieldDescription>Por favor, confirma tu contraseña.</FieldDescription>
+                  </Field>
+                </Field>
+                {error && <div className="text-red-600">{error}</div>}
+                <FieldGroup>
+                  <Field>
+                    <Button type="submit" disabled={loading}>
+                      {loading ? 'Cargando...' : 'Crear Cuenta'}
+                    </Button>
+                  </Field>
+                </FieldGroup>
+              </FieldGroup>
+            </form>
+          </CardContent>
+        </Card>
+        <FieldDescription className="px-6 text-center">
+          ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link>
+        </FieldDescription>
       </div>
     </div>
   );

@@ -73,8 +73,8 @@ function App() {
 
   return (
     <>
-      <AuthProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
           <Routes>
             {routeElements.map((route) => (
               <Route
@@ -97,8 +97,8 @@ function App() {
               />
             ))}
           </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </>
   );
 }

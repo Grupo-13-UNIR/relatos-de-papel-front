@@ -3,7 +3,6 @@ import type { User } from '@/types/user.ts';
 export const usersMock: (User & { password: string })[] = [
   {
     id: 1,
-    username: 'user1',
     name: 'User',
     lastname: '1',
     avatar: 'https://i.pravatar.cc/150?img=1',
@@ -12,7 +11,6 @@ export const usersMock: (User & { password: string })[] = [
   },
   {
     id: 2,
-    username: 'user2',
     name: 'User',
     lastname: '2',
     avatar: 'https://i.pravatar.cc/150?img=2',
@@ -21,7 +19,6 @@ export const usersMock: (User & { password: string })[] = [
   },
   {
     id: 3,
-    username: 'user3',
     name: 'User',
     lastname: '3',
     avatar: 'https://i.pravatar.cc/150?img=3',
@@ -30,7 +27,6 @@ export const usersMock: (User & { password: string })[] = [
   },
   {
     id: 4,
-    username: 'user4',
     name: 'User',
     lastname: '4',
     avatar: 'https://i.pravatar.cc/150?img=4',
@@ -39,7 +35,6 @@ export const usersMock: (User & { password: string })[] = [
   },
   {
     id: 5,
-    username: 'user5',
     name: 'User',
     lastname: '5',
     avatar: 'https://i.pravatar.cc/150?img=5',
