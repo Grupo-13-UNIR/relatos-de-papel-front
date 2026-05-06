@@ -7,43 +7,43 @@ import {
 import type { User } from '@/types/user.ts';
 
 import noAvatar from '@/assets/no-avatar.png';
+import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 
 export interface ProfileAvatarProps {
-  user?: User;
-  onLogout?: () => void;
-  onLogin?: () => void;
+  user: User;
+  onLogout: () => void;
+  onEditProfile: () => void;
 }
-export const ProfileAvatar = ({ user, onLogin, onLogout }: ProfileAvatarProps) => {
+export const ProfileAvatar = ({ user, onLogout, onEditProfile }: ProfileAvatarProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="focus:outline-none">
-          <img
-            src={user?.avatar || noAvatar}
-            alt="Avatar"
-            className="w-10 h-10 rounded-full object-cover cursor-pointer"
-          />
-        </button>
+        <Button variant="ghost" size="icon" className="rounded-full">
+          <Avatar>
+            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarFallback>{user.name.charAt(0) + user.lastname.charAt(0)}</AvatarFallback>
+            <AvatarBadge className="bg-green-600 dark:bg-green-800" />
+          </Avatar>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="w-32 bg-white border border-gray-200 rounded-md shadow-lg"
+        className="w-32 bg-popover border border-border rounded-md shadow-lg"
       >
-        {user ? (
-          <DropdownMenuItem
-            onClick={onLogout}
-            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-          >
-            Log out
-          </DropdownMenuItem>
-        ) : (
-          <DropdownMenuItem
-            onClick={onLogin}
-            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-          >
-            Login
-          </DropdownMenuItem>
-        )}
+        <DropdownMenuItem
+          className="px-4 py-2 hover:bg-muted cursor-pointer"
+          onClick={onEditProfile}
+        >
+          Editar perfil
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          variant="destructive"
+          onClick={onLogout}
+          className="px-4 py-2 hover:bg-muted cursor-pointer"
+        >
+          Cerrar sesión
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
