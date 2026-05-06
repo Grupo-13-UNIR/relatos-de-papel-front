@@ -1,72 +1,28 @@
-import { useState, useEffect, type ReactNode } from "react";
-import { CartContext } from "@/context/cart/CartContext";
-import type { CartItem } from "@/types/cartItem";
-import mockCart from "@/mock/cartItem-mock";
+import { useState, type ReactNode, useEffect } from 'react';
+import { CartContext } from '@/context/cart/CartContext.tsx';
+import type { BookShortened } from '@/types/book.ts';
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-
-  const [items, setItems] = useState<CartItem[]>(() => {
-    const storedCart = localStorage.getItem("cart");
-
-    if (storedCart) {
-      try {
-        return JSON.parse(storedCart);
-      } catch {
-        return [];
-      }
-    }
-
-    return mockCart.map(item => ({
-      id: item.id,
-      nombre: item.nombre,
-      precio: item.precio,
-      cantidad: item.cantidad ?? 1,
-      imagen: item.imagen,
-    }));
-  });
+  const [cart, setCart] = useState<Record<string, { book: BookShortened; quantity: number }>>(
+    JSON.parse(localStorage.getItem('cart') ?? '{}') as Record<
+      string,
+      { book: BookShortened; quantity: number }
+    >
+  );
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(items));
-  }, [items]);
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
-  const addItem = (item: CartItem) => {
-    setItems(prev => {
-      const exists = prev.find(i => i.id === item.id);
-
-      if (exists) {
-        return prev.map(i =>
-          i.id === item.id
-            ? { ...i, cantidad: i.cantidad + item.cantidad }
-            : i
-        );
+  const updateCart = (book: BookShortened, quantity: number) => {
+    setCart((prevState) => {
+      if (quantity <= 0) {
+        delete prevState[book.id];
+        return { ...prevState };
       }
-
-      return [...prev, item];
+      return { ...prevState, [book.id]: { book, quantity } };
     });
   };
 
-  const removeItem = (id: string) => {
-    setItems(prev => prev.filter(i => i.id !== id));
-  };
-
-  const updateQuantity = (id: string, cantidad: number) => {
-    if (cantidad <= 0) {
-      setItems(prev => prev.filter(i => i.id !== id));
-      return;
-    }
-
-    setItems(prev =>
-      prev.map(i =>
-        i.id === id ? { ...i, cantidad } : i
-      )
-    );
-  };
-
-  return (
-    <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+  return <CartContext.Provider value={{ cart, updateCart }}>{children}</CartContext.Provider>;
 };

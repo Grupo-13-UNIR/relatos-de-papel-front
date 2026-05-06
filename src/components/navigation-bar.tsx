@@ -32,7 +32,7 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
         />
       )}
       <div className="transition-colors">
-        <Link to="/catalogue" className="text-foreground">
+        <Link to="/books" className="text-gray-700">
           Catálogo
         </Link>
       </div>

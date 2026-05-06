@@ -1,53 +1,43 @@
-import { useCart } from "@/context/cart/CartContext";
-import { Button } from "@/components/ui/button";
+import { useCart } from '@/context/cart/CartContext';
+import { Button } from '@/components/ui/button';
+import { useMemo } from 'react';
+import { Input } from '@/components/ui/input.tsx';
 
 const Cart = () => {
-  const { items, removeItem, updateQuantity } = useCart();
+  const { cart, updateCart } = useCart();
 
-  const total = items.reduce(
-    (acc, item) => acc + item.precio * item.cantidad,
-    0
+  const cartItems = useMemo(() => Object.values(cart), [cart]);
+  const total = useMemo(
+    () => cartItems.reduce((acc, item) => acc + item.book.price * item.quantity, 0),
+    [cartItems]
   );
 
   return (
     <div>
-      {items.map(item => (
-        <div key={item.id}>
-          <h3>{item.nombre}</h3>
-          <p>{item.precio}€</p>
+      {cartItems.map(({ quantity, book }) => (
+        <div key={book.id}>
+          <h3>{book.title}</h3>
+          <p>{book.price}€</p>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            
-            <Button
-              onClick={() =>
-                updateQuantity(item.id, item.cantidad - 1)
-              }
-            >
-              -
-            </Button>
+          <div className="flex items-center gap-2">
+            <Button onClick={() => updateCart(book, quantity - 1)}>-</Button>
 
-            <input
+            <Input
               type="number"
               min={1}
-              value={item.cantidad}
+              value={quantity}
               onChange={(e) => {
                 const value = e.target.value;
-                if (value === "") return;
-                updateQuantity(item.id, Number(value));
+                if (value === '') return;
+                updateCart(book, Number(value));
               }}
-              style={{ width: 60, textAlign: "center" }}
+              className="w-15 text-center"
             />
 
-            <Button
-              onClick={() =>
-                updateQuantity(item.id, item.cantidad + 1)
-              }
-            >
-              +
-            </Button>
+            <Button onClick={() => updateCart(book, quantity + 1)}>+</Button>
           </div>
 
-          <Button variant="destructive" onClick={() => removeItem(item.id)}>
+          <Button variant="destructive" onClick={() => updateCart(book, 0)}>
             Eliminar
           </Button>
         </div>
