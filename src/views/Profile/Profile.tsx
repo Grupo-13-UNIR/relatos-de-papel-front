@@ -72,8 +72,14 @@ export default function Profile() {
         email: form.email || user.email,
         avatar: form.avatar || user.avatar,
       };
+      console.log('Current user data:', user);
+      console.log('Updated user data:', updated);
+      if (JSON.stringify(user) === JSON.stringify(updated)) {
+        showAlert('default', 'Sin cambios', 'No se han detectado cambios en tu perfil', 2000);
+        return;
+      }
       await delay(1500, () => {
-        throw new Error();
+        //throw new Error();
       });
       onLogin(updated);
       showAlert('default', 'Perfil actualizado', 'Tus datos se han guardado correctamente');
@@ -100,11 +106,8 @@ export default function Profile() {
       <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 bg-card p-6 rounded-md">
         <div className="flex items-center gap-4">
           <Avatar>
-            {preview ? (
-              <AvatarImage src={preview} alt="avatar" />
-            ) : (
-              <AvatarFallback>{user.name.charAt(0) + user.lastname.charAt(0)}</AvatarFallback>
-            )}
+            {preview && <AvatarImage src={preview} alt="avatar" />}
+            <AvatarFallback>{user.name.charAt(0) + user.lastname.charAt(0)}</AvatarFallback>
           </Avatar>
           <div>
             <label className="block text-sm text-muted-foreground mb-1">Cambiar imagen</label>

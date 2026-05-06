@@ -8,7 +8,7 @@ import Home from '@/views/Home.tsx';
 import Login from '@/views/Login.tsx';
 import NotFound from '@/views/NotFound.tsx';
 import Products from '@/views/Products.tsx';
-import Profile from '@/views/Profile.tsx';
+import Profile from '@/views/Profile/Profile';
 import Register from '@/views/Register.tsx';
 import { type JSX, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
