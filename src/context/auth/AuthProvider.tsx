@@ -7,12 +7,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
-  const login = async (data: User) => {
+  const onLogin = async (data: User) => {
     setUser(data);
   };
-  const logout = () => {
+  const onLogout = () => {
     setUser(null);
     navigate('/');
   };
-  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, onLogin, onLogout }}>{children}</AuthContext.Provider>
+  );
 };

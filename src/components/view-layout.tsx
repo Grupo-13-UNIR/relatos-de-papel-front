@@ -1,5 +1,6 @@
 import { NavigationBar } from '@/components/navigation-bar.tsx';
 import type { ReactNode } from 'react';
+import Footer from '@/components/footer';
 
 export function ViewLayout({ showSearch, children }: { showSearch: boolean; children: ReactNode }) {
   return (
@@ -8,6 +9,7 @@ export function ViewLayout({ showSearch, children }: { showSearch: boolean; chil
         <NavigationBar showSearch={showSearch} />
       </header>
       <main className="flex-1">{children}</main>
+      <Footer />
     </div>
   );
 }
