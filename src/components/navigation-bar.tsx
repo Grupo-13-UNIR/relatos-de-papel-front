@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { Input } from '@/components/ui/input.tsx';
 import { ProfileAvatar } from '@/components/profile-avatar.tsx';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
-import { CartIcon } from "@/components/icons/shoppingCartIcon";
+import { ShoppingCart, Trash } from 'lucide-react';
 
 export interface NavigationBarProps {
   showSearch: boolean;
@@ -35,7 +35,7 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
         </Link>
       </div>
       <div className="relative cursor-pointer" onClick={() => navigate('/cart')}>
-        <CartIcon className="w-6 h-6 text-gray-700" />
+        <ShoppingCart className="w-6 h-6 text-gray-700" />
       </div>
 
       <div>
