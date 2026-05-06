@@ -1,4 +1,4 @@
-export function delay<T>(ms: number, callback: () => T): Promise<T> {
+export function delay<T>(ms: number, callback: () => T = () => undefined as T): Promise<T> {
   console.log('delay called with ms:', ms);
   return new Promise((resolve, reject) => {
     setTimeout(() => {

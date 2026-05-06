@@ -50,6 +50,7 @@ const routeElements: RouteElement[] = [
     path: '/profile',
     component: <Profile />,
     showSearch: false,
+    privateRoute: true,
   },
   {
     path: '/catalogue',
