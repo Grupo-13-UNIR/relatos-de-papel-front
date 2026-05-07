@@ -13,6 +13,9 @@ import { type JSX, useEffect } from 'react';
 import { AuthProvider } from '@/context/auth/AuthProvider.tsx';
 import { CartProvider } from './context/cart/CartProvider.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router';
+import Checkout from '@/views/checkout.tsx';
+import Success from '@/views/checkoutSuccess.tsx';
+
 
 interface RouteElement {
   path: string;
@@ -55,6 +58,16 @@ const routeElements: RouteElement[] = [
   {
     path: '/catalogue',
     component: <Catalogue />,
+    showSearch: true,
+  },
+  {
+    path: '/checkout',
+    component: <Checkout />,
+    showSearch: true,
+  },
+  {
+    path: '/success',
+    component: <Success />,
     showSearch: true,
   },
 ];

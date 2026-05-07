@@ -62,9 +62,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
+  const clearCart = () => {
+  setItems([]);
+};
+
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity }}
+      value={{ items, addItem, removeItem, updateQuantity, clearCart }}
     >
       {children}
     </CartContext.Provider>

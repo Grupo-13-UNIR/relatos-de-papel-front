@@ -1,8 +1,10 @@
 import { useCart } from "@/context/cart/CartContext";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
 
 const Cart = () => {
   const { items, removeItem, updateQuantity } = useCart();
+  const navigate = useNavigate();
 
   const total = items.reduce(
     (acc, item) => acc + item.precio * item.cantidad,
@@ -47,13 +49,24 @@ const Cart = () => {
             </Button>
           </div>
 
-          <Button variant="destructive" onClick={() => removeItem(item.id)}>
+          <Button
+            variant="destructive"
+            onClick={() => removeItem(item.id)}
+          >
             Eliminar
           </Button>
         </div>
       ))}
 
       <h2>Total: {total.toFixed(2)}€</h2>
+
+      {items.length > 0 && (
+        <div style={{ marginTop: "2rem" }}>
+          <Button onClick={() => navigate("/checkout")}>
+            Comprar ahora
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
