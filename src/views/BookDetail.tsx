@@ -6,6 +6,7 @@ import NotFound from '@/views/NotFound.tsx';
 import { useCart } from '@/context/cart/CartContext.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.tsx';
+import { categoryLabels } from '@/translations/category.ts';
 
 const BookDetailEntry = ({
   label,
@@ -91,7 +92,7 @@ export const BookDetail = () => {
             <CardContent className="space-y-4 p-0">
               <div className="grid gap-3 grid-cols-2">
                 <BookDetailEntry label="Autor" value={book.author} />
-                <BookDetailEntry label="Categoría" value={book.category} />
+                <BookDetailEntry label="Categoría" value={categoryLabels[book.category]} />
                 <BookDetailEntry label="Fecha lanzamiento" value={formattedDate} />
                 <BookDetailEntry label="Valoración" value={book.rating + '/5'} />
                 <BookDetailEntry label="Stock" value={book.stock} />
