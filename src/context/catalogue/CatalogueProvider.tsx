@@ -33,8 +33,12 @@ export const CatalogueProvider = ({ children }: { children: ReactNode }) => {
     filtersFromParams.title = searchParams.get('title') || undefined;
     filtersFromParams.author = searchParams.get('author') || undefined;
     filtersFromParams.category = searchParams.get('category') as BookCategory | undefined;
-    filtersFromParams.priceLowerThan = Number(searchParams.get('priceLowerThan'));
-    filtersFromParams.priceGreaterThan = Number(searchParams.get('priceGreaterThan'));
+    filtersFromParams.priceMin = searchParams.has('priceMin')
+      ? Number(searchParams.get('priceMin'))
+      : undefined;
+    filtersFromParams.priceMax = searchParams.has('priceMax')
+      ? Number(searchParams.get('priceMax'))
+      : undefined;
     const page = Number(searchParams.get('page') ?? 1);
     const pageSize = Number(searchParams.get('pageSize') ?? 10);
     setFilters(filtersFromParams);
@@ -47,8 +51,8 @@ export const CatalogueProvider = ({ children }: { children: ReactNode }) => {
     if (filters.title) params.set('title', filters.title);
     if (filters.author) params.set('author', filters.author);
     if (filters.category) params.set('category', filters.category);
-    if (filters.priceLowerThan) params.set('priceLowerThan', String(filters.priceLowerThan));
-    if (filters.priceGreaterThan) params.set('priceGreaterThan', String(filters.priceGreaterThan));
+    if (filters.priceMin) params.set('priceMin', String(filters.priceMin));
+    if (filters.priceMax) params.set('priceMax', String(filters.priceMax));
 
     params.set('page', String(pageable.page));
     params.set('pageSize', String(pageable.pageSize));
