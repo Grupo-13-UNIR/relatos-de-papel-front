@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input.tsx';
 import { ProfileAvatar } from '@/components/profile-avatar.tsx';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
 import { ShoppingCart, Trash } from 'lucide-react';
+import { ModeToggle } from '@/components/mode-toggle';
+import { AuthButtons } from '@/components/auth-buttons';
 
 export interface NavigationBarProps {
   showSearch: boolean;
@@ -15,9 +17,9 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
   const [searchInput, setSearchInput] = useState('');
 
   return (
-    <div className="w-full bg-white shadow-md border-b border-gray-200 py-4 px-6 flex justify-between items-center">
+    <div className="w-full bg-card shadow-md border-b border-border py-4 px-6 flex justify-between items-center">
       <div className="flex items-center gap-2">
-        <Link to="/" className="text-xl font-bold text-gray-800">
+        <Link to="/" className="text-xl font-bold text-foreground">
           Relatos de Papel
         </Link>
       </div>
@@ -26,11 +28,11 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
           placeholder="Busca tu producto"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full max-w-xs border-gray-300"
+          className="w-full max-w-xs border-border"
         />
       )}
       <div className="transition-colors">
-        <Link to="/catalogue" className="text-gray-700">
+        <Link to="/catalogue" className="text-foreground">
           Catálogo
         </Link>
       </div>
@@ -39,7 +41,18 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
       </div>
 
       <div>
-        <ProfileAvatar user={user} onLogin={() => navigate('/login')} onLogout={onLogout} />
+        {user ? (
+          <ProfileAvatar
+            user={user}
+            onEditProfile={() => navigate('/profile')}
+            onLogout={onLogout}
+          />
+        ) : (
+          <AuthButtons></AuthButtons>
+        )}
+      </div>
+      <div>
+        <ModeToggle />
       </div>
     </div>
   );

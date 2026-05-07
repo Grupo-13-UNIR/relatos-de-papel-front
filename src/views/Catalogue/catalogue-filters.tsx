@@ -11,11 +11,7 @@ interface CatalogueFiltersProps {
   loading: boolean;
 }
 
-type NumberFilterKey =
-  | 'priceMin'
-  | 'priceMax'
-  | 'publishedYearFrom'
-  | 'publishedYearTo';
+type NumberFilterKey = 'priceMin' | 'priceMax' | 'publishedYearFrom' | 'publishedYearTo';
 
 const numberFields: NumberFilterKey[] = [
   'priceMin',
