@@ -16,6 +16,12 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
   const { user, onLogout } = useContext(AuthContext);
   const [searchInput, setSearchInput] = useState('');
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchInput.trim()) {
+      navigate(`/books?title=${encodeURIComponent(searchInput.trim())}`);
+    }
+  };
+
   return (
     <div className="w-full bg-card shadow-md border-b border-border py-4 px-6 flex justify-between items-center">
       <div className="flex items-center gap-2">
@@ -27,6 +33,7 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
         <Input
           placeholder="Busca tu producto"
           value={searchInput}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setSearchInput(e.target.value)}
           className="w-full max-w-xs border-border"
         />

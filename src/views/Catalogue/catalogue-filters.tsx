@@ -1,15 +1,9 @@
-import { type ChangeEvent, type SubmitEvent, useState } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { type ChangeEvent, type SubmitEvent, useEffect, useState } from 'react';
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import type { BookFilters } from '@/types/catalogue.ts';
-
-interface CatalogueFiltersProps {
-  className?: string;
-  onSearch: (catalogueFilters: BookFilters) => void;
-  loading: boolean;
-}
+import { useCatalogue } from '@/context/catalogue/CatalogueContext.tsx';
 
 type NumberFilterKey = 'priceMin' | 'priceMax' | 'publishedYearFrom' | 'publishedYearTo';
 
@@ -20,12 +14,17 @@ const numberFields: NumberFilterKey[] = [
   'publishedYearTo',
 ];
 
-export const CatalogueFilters = ({ className, onSearch, loading }: CatalogueFiltersProps) => {
+export const CatalogueFilters = () => {
+  const { loading, filters, setFilters } = useCatalogue();
   const [formData, setFormData] = useState<BookFilters>({});
+
+  useEffect(() => {
+    setFormData(filters);
+  }, [filters]);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
-    onSearch(formData);
+    setFilters(formData);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,11 +46,11 @@ export const CatalogueFilters = ({ className, onSearch, loading }: CatalogueFilt
 
   const onClear = () => {
     setFormData({});
-    onSearch({});
+    setFilters({});
   };
 
   return (
-    <div className={cn('flex h-full min-h-0 flex-col', className)}>
+    <div className='flex h-full min-h-0 flex-col'>
       <form onSubmit={handleSubmit} className="flex h-full min-h-0 flex-col">
         <div className="min-h-0 flex-1 overflow-y-auto pr-1">
           <FieldGroup>
