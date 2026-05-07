@@ -123,7 +123,6 @@ export const CheckoutForm = () => {
       </div>
     </div>
 
-    {/* 🔹 TELÉFONO FUERA DEL GRID */}
     <div>
       <p>Teléfono</p>
       <input
@@ -135,7 +134,6 @@ export const CheckoutForm = () => {
       />
     </div>
 
-    {/* 🔹 BOTÓN */}
     <Button
       disabled={!isFormValid}
       onClick={handlePurchase}
