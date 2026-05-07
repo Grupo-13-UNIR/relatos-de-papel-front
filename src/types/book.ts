@@ -8,6 +8,8 @@ export enum BookCategory {
   FANTASY = 'FANTASY',
 }
 
+export type BookShortened = Omit<Book, 'category' | 'summary' | 'releaseDate'>;
+
 export interface Book {
   id: number;
   title: string;

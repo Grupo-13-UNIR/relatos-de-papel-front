@@ -1,12 +1,10 @@
-import { createContext, useContext } from "react";
-import type { CartItem } from "@/types/cartItem";
+import { createContext, useContext } from 'react';
+import type { BookShortened } from '@/types/book.ts';
 
-export type CartContextType = {
-  items: CartItem[];
-  addItem: (item: CartItem) => void;
-  removeItem: (id: string) => void;
- updateQuantity: (id: string, cantidad: number) => void;
-};
+interface CartContextType {
+  cart: Record<string, { book: BookShortened; quantity: number }>;
+  updateCart: (book: BookShortened, quantity: number) => void;
+}
 
 export const CartContext = createContext<CartContextType | null>(null);
 

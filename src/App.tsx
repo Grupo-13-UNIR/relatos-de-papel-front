@@ -1,6 +1,7 @@
 import { PrivateRoute } from '@/components/private-route.tsx';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ViewLayout } from '@/components/view-layout.tsx';
+import { AuthProvider } from '@/context/auth/AuthProvider.tsx';
 import Cart from '@/views/Cart.tsx';
 import Catalogue from '@/views/Catalogue';
 import Home from '@/views/Home.tsx';
@@ -10,9 +11,9 @@ import Products from '@/views/Products.tsx';
 import Profile from '@/views/Profile.tsx';
 import Register from '@/views/Register.tsx';
 import { type JSX, useEffect } from 'react';
-import { AuthProvider } from '@/context/auth/AuthProvider.tsx';
-import { CartProvider } from './context/cart/CartProvider.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router';
+import { CartProvider } from '@/context/cart/CartProvider.tsx';
+import { BookDetail } from '@/views/BookDetail.tsx';
 
 interface RouteElement {
   path: string;
@@ -53,8 +54,13 @@ const routeElements: RouteElement[] = [
     showSearch: false,
   },
   {
-    path: '/catalogue',
+    path: '/books',
     component: <Catalogue />,
+    showSearch: true,
+  },
+  {
+    path: '/books/:id',
+    component: <BookDetail />,
     showSearch: true,
   },
 ];
@@ -72,7 +78,7 @@ function App() {
         document.head.removeChild(script);
       };
     }
-  }, []);  
+  }, []);
 
   return (
     <>
