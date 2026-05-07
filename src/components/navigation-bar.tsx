@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { Input } from '@/components/ui/input.tsx';
 import { ProfileAvatar } from '@/components/profile-avatar.tsx';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
+import { ShoppingCart, Trash } from 'lucide-react';
 import { ModeToggle } from '@/components/mode-toggle';
 import { AuthButtons } from '@/components/auth-buttons';
 
@@ -35,6 +36,10 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
           Catálogo
         </Link>
       </div>
+      <div className="relative cursor-pointer" onClick={() => navigate('/cart')}>
+        <ShoppingCart className="w-6 h-6 text-gray-700" />
+      </div>
+
       <div>
         {user ? (
           <ProfileAvatar

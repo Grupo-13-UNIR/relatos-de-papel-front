@@ -11,6 +11,11 @@ import Products from '@/views/Products.tsx';
 import Profile from '@/views/Profile.tsx';
 import Register from '@/views/Register.tsx';
 import { type JSX, useEffect } from 'react';
+import { AuthProvider } from '@/context/auth/AuthProvider.tsx';
+import Catalogue from '@/views/Catalogue';
+import { ViewLayout } from '@/components/view-layout.tsx';
+import { PrivateRoute } from '@/components/private-route.tsx';
+import { CartProvider } from './context/cart/CartProvider.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 interface RouteElement {
@@ -71,13 +76,14 @@ function App() {
         document.head.removeChild(script);
       };
     }
-  }, []);
+  }, []);  
 
   return (
     <>
       <BrowserRouter>
         <ThemeProvider storageKey="ui-theme">
           <AuthProvider>
+           <CartProvider>
             <Routes>
               {routeElements.map((route) => (
                 <Route
@@ -108,6 +114,7 @@ function App() {
                 }
               />
             </Routes>
+           </CartProvider>
           </AuthProvider>
         </ThemeProvider>
       </BrowserRouter>
