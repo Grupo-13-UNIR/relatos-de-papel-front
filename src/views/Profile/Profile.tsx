@@ -7,6 +7,7 @@ import type { User } from '@/types/user';
 import { useContext, useState, type SubmitEvent } from 'react';
 import { useNavigate } from 'react-router';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import Orders from '@/views/Profile/Orders';
 
 export default function Profile() {
   const { user, onLogin } = useContext(AuthContext);
@@ -78,9 +79,7 @@ export default function Profile() {
         showAlert('default', 'Sin cambios', 'No se han detectado cambios en tu perfil', 2000);
         return;
       }
-      await delay(1500, () => {
-        //throw new Error();
-      });
+      await delay(1500, () => {});
       onLogin(updated);
       showAlert('default', 'Perfil actualizado', 'Tus datos se han guardado correctamente');
     } catch (err) {
@@ -103,6 +102,7 @@ export default function Profile() {
   return (
     <section className="p-6 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Mi Perfil</h1>
+
       <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 bg-card p-6 rounded-md">
         <div className="flex items-center gap-4">
           <Avatar>
@@ -145,8 +145,8 @@ export default function Profile() {
           </Button>
         </div>
       </form>
-      {alert && (
-        <div className="mt-4">
+      <div className="mt-4">
+        {alert && (
           <div
             className={`transform transition-all duration-300 ${
               alert.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
@@ -156,20 +156,13 @@ export default function Profile() {
               <AlertTitle>{alert.title}</AlertTitle>
               {alert.description && <AlertDescription>{alert.description}</AlertDescription>}
               <div className="absolute left-0 bottom-0 w-full" aria-hidden>
-                <div
-                  className="alert-progress"
-                  style={{
-                    animationName: 'alert-progress-shrink',
-                    animationTimingFunction: 'linear',
-                    animationFillMode: 'forwards',
-                    animationDuration: `${alert.duration ?? 4000}ms`,
-                  }}
-                />
+                <div className="alert-progress" />
               </div>
             </Alert>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      <Orders />
     </section>
   );
 }

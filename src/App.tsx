@@ -61,6 +61,7 @@ const routeElements: RouteElement[] = [
 
 function App() {
   useEffect(() => {
+    // Load React Scan in development
     if (import.meta.env.DEV) {
       const script = document.createElement('script');
       script.src = '//unpkg.com/react-scan/dist/auto.global.js';
