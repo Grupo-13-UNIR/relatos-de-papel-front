@@ -46,7 +46,8 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
   }, [debouncedSearch, navigate]);
 
   return (
-    <div className="w-full bg-card shadow-md border-b border-border py-4 px-6 flex justify-between items-center">
+    <div className="w-full bg-card shadow-md border-b border-border py-4 px-6 flex items-center">
+      {/* Left: logo */}
       <div className="flex items-center gap-2">
         <Link to="/" className="text-xl font-bold text-foreground flex items-center">
           <BookOpen className="size-6 text-primary mr-2" />
@@ -54,47 +55,54 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
         </Link>
       </div>
 
-      {showSearch && (
-        <Input
-          placeholder="Busca tu producto"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full max-w-xs border-border"
-        />
-      )}
+      <div className="flex-1 flex items-center justify-center gap-6">
+        {showSearch && (
+          <Input
+            placeholder="Busca tu producto"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            className="w-full max-w-xs border-border"
+          />
+        )}
 
-      <div className="transition-colors">
-        <Link to="/books" className="text-gray-700">
+        <Link to="/books" className="text-foreground hover:text-primary">
           Catálogo
         </Link>
       </div>
 
-      <div
-        className="relative cursor-pointer"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <div onClick={() => navigate('/cart')} className="relative">
-          <ShoppingCart className="w-6 h-6 text-gray-700" />
+      {/* Right: cart, profile/auth, mode toggle */}
+      <div className="flex items-center gap-4">
+        <div
+          className="relative cursor-pointer"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button
+            onClick={() => navigate('/cart')}
+            aria-label="Ver carrito"
+            className="relative focus:outline-none text-foreground hover:text-primary"
+          >
+            <ShoppingCart className="w-6 h-6" />
+          </button>
+
+          {showCart && <CartDropdown />}
         </div>
 
-        {showCart && <CartDropdown />}
-      </div>
+        <div>
+          {user ? (
+            <ProfileAvatar
+              user={user}
+              onEditProfile={() => navigate('/profile')}
+              onLogout={onLogout}
+            />
+          ) : (
+            <AuthButtons />
+          )}
+        </div>
 
-      <div>
-        {user ? (
-          <ProfileAvatar
-            user={user}
-            onEditProfile={() => navigate('/profile')}
-            onLogout={onLogout}
-          />
-        ) : (
-          <AuthButtons />
-        )}
-      </div>
-
-      <div>
-        <ModeToggle />
+        <div>
+          <ModeToggle />
+        </div>
       </div>
     </div>
   );

@@ -28,10 +28,12 @@ export const bookService = {
     pageSize: number = 10,
     page: number = 1
   ): Promise<Page<BookShortened>> => {
-    const books = bookMock
-      .filter((book) => bookMatches(book, filters))
-      .slice((page - 1) * pageSize, page * pageSize);
-    return Promise.resolve({ content: books, total: books.length, pageable: { page, pageSize } });
+    const booksFiltered = bookMock.filter((book) => bookMatches(book, filters));
+    return Promise.resolve({
+      content: booksFiltered.slice((page - 1) * pageSize, page * pageSize),
+      total: booksFiltered.length,
+      pageable: { page, pageSize },
+    });
   },
   getBook: async (bookId: number): Promise<Book> => {
     const book = bookMock.find((book) => book.id === bookId);
