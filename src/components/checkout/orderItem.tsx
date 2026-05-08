@@ -1,39 +1,43 @@
-import type { CartItem } from "@/types/cartItem";
+import type { BookShortened } from "@/types/book";
 
 interface Props {
-  item: CartItem;
+  cart: Record<string, { book: BookShortened; quantity: number }>;
 }
-
-export const OrderItem = ({ item }: Props) => {
+export const OrderItem = ({ cart }: Props) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "1rem",
-        marginBottom: "1rem",
-      }}
-    >
-      <img
-        src={item.imagen}
-        alt={item.nombre}
-        style={{
-          width: 60,
-          height: 60,
-          objectFit: "cover",
-        }}
-      />
+    <>
+      {Object.entries(cart).map(([key, { book, quantity }]) => (
+        <div
+          key={key}
+          style={{
+            display: "flex",
+            gap: "1rem",
+            marginBottom: "1rem",
+          }}
+        >
+          <img
+            src={book.image}
+            alt={book.title}
+            style={{
+              width: 60,
+              height: 60,
+              objectFit: "cover",
+            }}
+          />
 
-      <div>
-        <h4>{item.nombre}</h4>
+          <div>
+            <h4>{book.title}</h4>
 
-        <p>
-          {item.cantidad} x {item.precio}€
-        </p>
+            <p>
+              {quantity} x {book.price}€
+            </p>
 
-        <p>
-          Subtotal: {(item.precio * item.cantidad).toFixed(2)}€
-        </p>
-      </div>
-    </div>
+            <p>
+              Subtotal: {(book.price * quantity).toFixed(2)}€
+            </p>
+          </div>
+        </div>
+      ))}
+    </>
   );
 };

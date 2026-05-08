@@ -1,12 +1,12 @@
-import type { CartItem } from "@/types/cartItem";
+import type { BookShortened } from "@/types/book";
 
 interface Props {
-  items: CartItem[];
+  cart: Record<string, { book: BookShortened; quantity: number }>;
 }
 
-export const OrderSummary = ({ items }: Props) => {
-  const total = items.reduce(
-    (acc, item) => acc + item.precio * item.cantidad,
+export const OrderSummary = ({ cart }: Props) => {
+  const total = Object.values(cart).reduce(
+    (acc, item) => acc + item.book.price * item.quantity,
     0
   );
 
@@ -20,11 +20,11 @@ export const OrderSummary = ({ items }: Props) => {
     >
       <h2>Resumen del pedido</h2>
 
-      {items.map(item => (
-        <div key={item.id}>
-          <p>{item.nombre}</p>
+      {Object.values(cart).map((item) => (
+        <div key={item.book.id}>
+          <p>{item.book.title}</p>
           <p>
-            {item.cantidad} x {item.precio}€
+            {item.quantity} x {item.book.price.toFixed(2)}€
           </p>
         </div>
       ))}

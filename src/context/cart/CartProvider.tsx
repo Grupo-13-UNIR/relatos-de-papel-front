@@ -24,30 +24,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const removeItem = (id: string) => {
-    setItems(prev => prev.filter(i => i.id !== id));
-  };
-
-  const updateQuantity = (id: string, cantidad: number) => {
-    if (cantidad <= 0) {
-      setItems(prev => prev.filter(i => i.id !== id));
-      return;
-    }
-
-    setItems(prev =>
-      prev.map(i =>
-        i.id === id ? { ...i, cantidad } : i
-      )
-    );
-  };
-
   const clearCart = () => {
-  setItems([]);
+    setCart({});
 };
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart }}
+      value={{ cart, updateCart, clearCart }}
     >
       {children}
     </CartContext.Provider>

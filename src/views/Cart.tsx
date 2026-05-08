@@ -1,9 +1,11 @@
 import { useCart } from "@/context/cart/CartContext";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
+import { Input } from "@/components/ui/input";
+import { useMemo } from "react";
 
 const Cart = () => {
-  const { items, removeItem, updateQuantity } = useCart();
+  const { cart, updateCart } = useCart();
   const navigate = useNavigate();
 
   const cartItems = useMemo(() => Object.values(cart), [cart]);
@@ -45,7 +47,7 @@ const Cart = () => {
 
       <h2>Total: {total.toFixed(2)}€</h2>
 
-      {items.length > 0 && (
+      {cartItems.length > 0 && (
         <div style={{ marginTop: "2rem" }}>
           <Button onClick={() => navigate("/checkout")}>
             Comprar ahora

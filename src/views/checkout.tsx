@@ -3,9 +3,9 @@ import { OrderSummary } from "@/components/checkout/orderSummary";
 import { useCart } from "@/context/cart/CartContext";
 
 const Checkout = () => {
-  const { items } = useCart();
+  const { cart } = useCart();
 
-  if (items.length === 0) {
+  if (Object.keys(cart).length === 0) {
     return <p>El carrito está vacío</p>;
   }
 
@@ -20,7 +20,7 @@ const Checkout = () => {
     >
       <CheckoutForm />
 
-      <OrderSummary items={items} />
+      <OrderSummary cart={cart} />
     </div>
   );
 };

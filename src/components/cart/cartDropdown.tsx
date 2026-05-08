@@ -3,10 +3,10 @@ import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 
 export const CartDropdown = () => {
-  const { items } = useCart();
+  const { cart } = useCart();
 
-  const total = items.reduce(
-    (acc, item) => acc + item.precio * item.cantidad,
+  const total = Object.values(cart).reduce(
+    (acc, { book, quantity }) => acc + book.price * quantity ,
     0
   );
 
@@ -27,7 +27,7 @@ export const CartDropdown = () => {
     >
       <h4>Carrito</h4>
 
-      {items.length === 0 ? (
+      {Object.values(cart).length === 0 ? (
         <p>El carrito está vacío</p>
       ) : (
         <>
@@ -39,9 +39,9 @@ export const CartDropdown = () => {
               marginTop: "1rem",
             }}
           >
-            {items.map(item => (
+            {Object.values(cart).map(({ book, quantity }) => (
               <div
-                key={item.id}
+                key={book.id}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -50,8 +50,8 @@ export const CartDropdown = () => {
                 }}
               >
                 <img
-                  src={item.imagen}
-                  alt={item.nombre}
+                  src={book.image}
+                  alt={book.title}
                   style={{
                     width: 50,
                     height: 50,
@@ -67,7 +67,7 @@ export const CartDropdown = () => {
                       margin: 0,
                     }}
                   >
-                    {item.nombre}
+                    {book.title}
                   </p>
 
                   <p
@@ -77,7 +77,7 @@ export const CartDropdown = () => {
                       color: "#666",
                     }}
                   >
-                    x{item.cantidad}
+                    x{quantity}
                   </p>
                 </div>
 
@@ -87,7 +87,7 @@ export const CartDropdown = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  {(item.precio * item.cantidad).toFixed(2)}€
+                  {(book.price * quantity).toFixed(2)}€
                 </p>
               </div>
             ))}

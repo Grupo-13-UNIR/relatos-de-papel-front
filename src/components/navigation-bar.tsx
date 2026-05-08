@@ -100,3 +100,4 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
     </div>
   );
 };
+}
