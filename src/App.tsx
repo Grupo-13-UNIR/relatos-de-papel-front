@@ -24,6 +24,7 @@ interface RouteElement {
   component: JSX.Element;
   index?: boolean;
   showSearch?: boolean;
+  fullFooter?: boolean;
   privateRoute?: boolean;
 }
 
@@ -33,6 +34,7 @@ const routeElements: RouteElement[] = [
     component: <Home />,
     index: true,
     showSearch: true,
+    fullFooter: true,
   },
   {
     path: '/register',
@@ -108,26 +110,28 @@ function App() {
             <CartProvider>
               <Toaster position="top-right" />
               <Routes>
-                {routeElements.map((route) => (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={
-                      route.privateRoute ? (
-                        <PrivateRoute>
-                          <ViewLayout showSearch={route.showSearch ?? false}>
-                            {route.component}
+                {routeElements.map(
+                  ({ path, index, privateRoute, showSearch, fullFooter, component }) => (
+                    <Route
+                      key={path}
+                      path={path}
+                      element={
+                        privateRoute ? (
+                          <PrivateRoute>
+                            <ViewLayout fullFooter={fullFooter} showSearch={showSearch ?? false}>
+                              {component}
+                            </ViewLayout>
+                          </PrivateRoute>
+                        ) : (
+                          <ViewLayout fullFooter={fullFooter} showSearch={showSearch ?? false}>
+                            {component}
                           </ViewLayout>
-                        </PrivateRoute>
-                      ) : (
-                        <ViewLayout showSearch={route.showSearch ?? false}>
-                          {route.component}
-                        </ViewLayout>
-                      )
-                    }
-                    index={route.index}
-                  />
-                ))}
+                        )
+                      }
+                      index={index}
+                    />
+                  )
+                )}
               </Routes>
             </CartProvider>
           </AuthProvider>

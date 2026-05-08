@@ -1,20 +1,17 @@
-import type { BookShortened } from "@/types/book";
+import type { BookShortened } from '@/types/book';
 
 interface Props {
   cart: Record<string, { book: BookShortened; quantity: number }>;
 }
 
 export const OrderSummary = ({ cart }: Props) => {
-  const total = Object.values(cart).reduce(
-    (acc, item) => acc + item.book.price * item.quantity,
-    0
-  );
+  const total = Object.values(cart).reduce((acc, item) => acc + item.book.price * item.quantity, 0);
 
   return (
     <div
       style={{
-        border: "1px solid #ccc",
-        padding: "1.5rem",
+        border: '1px solid #ccc',
+        padding: '1.5rem',
         borderRadius: 8,
       }}
     >

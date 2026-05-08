@@ -19,7 +19,7 @@ const useQuery = <T,>(query: () => Promise<T>, config: UseQueryConfiguration<T>)
     try {
       if (import.meta.env.DEV) {
         // Mock latency
-        await delay(1500, () => {});
+        await delay(1000);
       }
       const response = await query();
       setResult(response);
@@ -35,7 +35,6 @@ const useQuery = <T,>(query: () => Promise<T>, config: UseQueryConfiguration<T>)
     } catch (err) {
       setError(err as Error);
       if (config.toastConfiguration?.showError) {
-        console.log(config.toastConfiguration?.showError);
         toast.error((err as Error).message);
       }
     } finally {

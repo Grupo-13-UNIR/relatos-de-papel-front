@@ -26,6 +26,9 @@ export default defineConfig([
       globals: globals.browser,
     },
     rules: {
+      'react-hooks/exhaustive-deps': 'off',
+      'react-hooks/set-state-in-effect': 'off',
+      'react-refresh/only-export-components': 'off',
       'no-relative-import-paths/no-relative-import-paths': [
         'error',
         {

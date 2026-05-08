@@ -1,6 +1,6 @@
-import { CheckoutForm } from "@/components/checkout/checkoutForm";
-import { OrderSummary } from "@/components/checkout/orderSummary";
-import { useCart } from "@/context/cart/CartContext";
+import { CheckoutForm } from '@/components/checkout/checkoutForm';
+import { OrderSummary } from '@/components/checkout/orderSummary';
+import { useCart } from '@/context/cart/CartContext';
 
 const Checkout = () => {
   const { cart } = useCart();
@@ -12,10 +12,10 @@ const Checkout = () => {
   return (
     <div
       style={{
-        display: "grid",
-        gridTemplateColumns: "2fr 1fr",
-        gap: "2rem",
-        padding: "2rem",
+        display: 'grid',
+        gridTemplateColumns: '2fr 1fr',
+        gap: '2rem',
+        padding: '2rem',
       }}
     >
       <CheckoutForm />

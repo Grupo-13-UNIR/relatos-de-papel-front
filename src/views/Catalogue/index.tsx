@@ -7,7 +7,7 @@ import { CatalogueContent } from '@/views/Catalogue/catalogue-content.tsx';
 export default function Catalogue() {
   return (
     <CatalogueProvider>
-      <div className="h-[calc(100vh-5rem)] p-4">
+      <div className="h-[calc(100vh-6rem)] p-4">
         <div className="flex h-full p-2 gap-4 overflow-hidden">
           <Card className="w-full max-w-sm shrink-0">
             <CardHeader className="text-center">

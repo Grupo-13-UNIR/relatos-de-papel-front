@@ -2,8 +2,8 @@ const CheckoutSuccess = () => {
   return (
     <div
       style={{
-        padding: "4rem",
-        textAlign: "center",
+        padding: '4rem',
+        textAlign: 'center',
       }}
     >
       <h1>Compra completada con éxito!</h1>

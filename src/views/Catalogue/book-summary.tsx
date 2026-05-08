@@ -7,10 +7,7 @@ export interface BookSummaryProps {
   onClick?: (book: BookShortened) => void;
 }
 
-export const BookSummary = ({
-  book,
-  onClick,
-}: BookSummaryProps) => {
+export const BookSummary = ({ book, onClick }: BookSummaryProps) => {
   const formattedPrice = useMemo(
     () =>
       new Intl.NumberFormat('es-ES', {

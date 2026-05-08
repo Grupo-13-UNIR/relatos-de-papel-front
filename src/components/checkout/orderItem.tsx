@@ -1,4 +1,4 @@
-import type { BookShortened } from "@/types/book";
+import type { BookShortened } from '@/types/book';
 
 interface Props {
   cart: Record<string, { book: BookShortened; quantity: number }>;
@@ -10,9 +10,9 @@ export const OrderItem = ({ cart }: Props) => {
         <div
           key={key}
           style={{
-            display: "flex",
-            gap: "1rem",
-            marginBottom: "1rem",
+            display: 'flex',
+            gap: '1rem',
+            marginBottom: '1rem',
           }}
         >
           <img
@@ -21,7 +21,7 @@ export const OrderItem = ({ cart }: Props) => {
             style={{
               width: 60,
               height: 60,
-              objectFit: "cover",
+              objectFit: 'cover',
             }}
           />
 
@@ -32,9 +32,7 @@ export const OrderItem = ({ cart }: Props) => {
               {quantity} x {book.price}€
             </p>
 
-            <p>
-              Subtotal: {(book.price * quantity).toFixed(2)}€
-            </p>
+            <p>Subtotal: {(book.price * quantity).toFixed(2)}€</p>
           </div>
         </div>
       ))}
