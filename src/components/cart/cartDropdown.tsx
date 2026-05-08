@@ -6,7 +6,7 @@ export const CartDropdown = () => {
   const { cart } = useCart();
 
   const total = Object.values(cart).reduce(
-    (acc, { book, quantity }) => acc + book.price * quantity ,
+    (acc, { book, quantity }) => acc + book.price * quantity,
     0
   );
 
@@ -37,6 +37,9 @@ export const CartDropdown = () => {
               flexDirection: "column",
               gap: "1rem",
               marginTop: "1rem",
+              maxHeight: 300,
+              overflowY: "auto",
+              paddingRight: "0.5rem",
             }}
           >
             {Object.values(cart).map(({ book, quantity }) => (
@@ -57,14 +60,23 @@ export const CartDropdown = () => {
                     height: 50,
                     objectFit: "cover",
                     borderRadius: 4,
+                    flexShrink: 0,
                   }}
                 />
 
-                <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    flex: 1,
+                    minWidth: 0,
+                  }}
+                >
                   <p
                     style={{
                       fontWeight: "bold",
                       margin: 0,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
                     }}
                   >
                     {book.title}
@@ -85,6 +97,7 @@ export const CartDropdown = () => {
                   style={{
                     margin: 0,
                     fontWeight: "bold",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {(book.price * quantity).toFixed(2)}€
