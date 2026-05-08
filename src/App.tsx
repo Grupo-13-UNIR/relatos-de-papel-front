@@ -8,7 +8,7 @@ import Home from '@/views/Home.tsx';
 import Login from '@/views/Login.tsx';
 import NotFound from '@/views/NotFound.tsx';
 import Products from '@/views/Products.tsx';
-import Profile from '@/views/Profile.tsx';
+import Profile from '@/views/Profile/Profile';
 import Register from '@/views/Register.tsx';
 import { type JSX, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
@@ -52,6 +52,7 @@ const routeElements: RouteElement[] = [
     path: '/profile',
     component: <Profile />,
     showSearch: false,
+    privateRoute: true,
   },
   {
     path: '/books',
@@ -67,6 +68,7 @@ const routeElements: RouteElement[] = [
 
 function App() {
   useEffect(() => {
+    // Load React Scan in development
     if (import.meta.env.DEV) {
       const script = document.createElement('script');
       script.src = '//unpkg.com/react-scan/dist/auto.global.js';
