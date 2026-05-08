@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { categoryLabels } from '@/translations/category.ts';
 import Loader from '@/components/loader.tsx';
-import useQuery from '@/hooks/useQuery.tsx';
+import useQuery from '@/hooks/use-query';
 
 const BookDetailEntry = ({
   label,

@@ -6,8 +6,8 @@ import { AuthContext } from '@/context/auth/AuthContext.tsx';
 import { BookOpen, ShoppingCart } from 'lucide-react';
 import { ModeToggle } from '@/components/mode-toggle';
 import { AuthButtons } from '@/components/auth-buttons';
-import { CartDropdown } from '@/components/cart/cartDropdown';
-import { useDebounce } from '@/hooks/useDebounce';
+import { CartDropdown } from '@/components/cart/cart-dropdown';
+import { useDebounce } from '@/hooks/use-debounce';
 
 export interface NavigationBarProps {
   showSearch: boolean;

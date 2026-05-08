@@ -12,9 +12,8 @@ import Profile from '@/views/Profile/Profile';
 import Register from '@/views/Register.tsx';
 import { type JSX, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import Checkout from '@/views/checkout.tsx';
-import Success from '@/views/checkoutSuccess.tsx';
-
+import Checkout from './views/checkout';
+import CheckoutSuccess from './views/checkoutSuccess';
 import { CartProvider } from '@/context/cart/CartProvider.tsx';
 import { BookDetail } from '@/views/BookDetail.tsx';
 import { Toaster } from '@/components/ui/sonner.tsx';
@@ -72,7 +71,7 @@ const routeElements: RouteElement[] = [
   },
   {
     path: '/success',
-    component: <Success />,
+    component: <CheckoutSuccess />,
   },
   {
     path: '/books/:id',
