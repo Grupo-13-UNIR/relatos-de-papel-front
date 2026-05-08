@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { Input } from '@/components/ui/input.tsx';
 import { ProfileAvatar } from '@/components/profile-avatar.tsx';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
-import { ShoppingCart, Trash } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { ModeToggle } from '@/components/mode-toggle';
 import { AuthButtons } from '@/components/auth-buttons';
 

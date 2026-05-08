@@ -6,7 +6,6 @@ import {
 } from '@/components/ui/dropdown-menu.tsx';
 import type { User } from '@/types/user.ts';
 
-import noAvatar from '@/assets/no-avatar.png';
 import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 

@@ -1,7 +1,5 @@
-import { BookOpen, Mail, MapPin, Phone } from "lucide-react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Separator } from "./ui/separator";
+import { BookOpen, Mail, MapPin, Phone } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
 export default function Footer() {
   return (
@@ -15,8 +13,8 @@ export default function Footer() {
               <span className="font-semibold text-lg">Relatos de Papel</span>
             </div>
             <p className="text-muted-foreground mb-6">
-              Tu librería digital de confianza. Miles de libros físicos y digitales
-              al alcance de un clic.
+              Tu librería digital de confianza. Miles de libros físicos y digitales al alcance de un
+              clic.
             </p>
             <div className="flex flex-col gap-2 text-sm">
               <div className="flex items-center gap-2 text-muted-foreground">
@@ -38,11 +36,31 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Categorías</h3>
             <ul className="space-y-2 text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground transition-colors">Ficción</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">No Ficción</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Misterio</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Romance</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Ciencia Ficción</a></li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  Ficción
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  No Ficción
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  Misterio
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  Romance
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  Ciencia Ficción
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -50,11 +68,31 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Ayuda</h3>
             <ul className="space-y-2 text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground transition-colors">Centro de ayuda</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Estado de pedido</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Envíos</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Devoluciones</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Métodos de pago</a></li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  Centro de ayuda
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  Estado de pedido
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  Envíos
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  Devoluciones
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-foreground transition-colors">
+                  Métodos de pago
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -82,9 +120,15 @@ export default function Footer() {
           <p>© 2026 Relatos de Papel. Todos los derechos reservados.</p>
           {/* ToDo: acceso directo a páginas de ayuda y configuraciones */}
           <div className="flex gap-6">
-            <a href="#" className="hover:text-foreground transition-colors">Privacidad</a>
-            <a href="#" className="hover:text-foreground transition-colors">Términos</a>
-            <a href="#" className="hover:text-foreground transition-colors">Cookies</a>
+            <a href="#" className="hover:text-foreground transition-colors">
+              Privacidad
+            </a>
+            <a href="#" className="hover:text-foreground transition-colors">
+              Términos
+            </a>
+            <a href="#" className="hover:text-foreground transition-colors">
+              Cookies
+            </a>
           </div>
         </div>
       </div>

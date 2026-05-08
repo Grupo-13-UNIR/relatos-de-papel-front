@@ -87,38 +87,38 @@ function App() {
       <BrowserRouter>
         <ThemeProvider storageKey="ui-theme">
           <AuthProvider>
-           <CartProvider>
-            <Routes>
-              {routeElements.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={
-                    route.privateRoute ? (
-                      <PrivateRoute>
+            <CartProvider>
+              <Routes>
+                {routeElements.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={
+                      route.privateRoute ? (
+                        <PrivateRoute>
+                          <ViewLayout showSearch={route.showSearch ?? false}>
+                            {route.component}
+                          </ViewLayout>
+                        </PrivateRoute>
+                      ) : (
                         <ViewLayout showSearch={route.showSearch ?? false}>
                           {route.component}
                         </ViewLayout>
-                      </PrivateRoute>
-                    ) : (
-                      <ViewLayout showSearch={route.showSearch ?? false}>
-                        {route.component}
-                      </ViewLayout>
-                    )
+                      )
+                    }
+                    index={route.index}
+                  />
+                ))}
+                <Route
+                  path="*"
+                  element={
+                    <ViewLayout showSearch={false}>
+                      <NotFound />
+                    </ViewLayout>
                   }
-                  index={route.index}
                 />
-              ))}
-              <Route
-                path="*"
-                element={
-                  <ViewLayout showSearch={false}>
-                    <NotFound />
-                  </ViewLayout>
-                }
-              />
-            </Routes>
-           </CartProvider>
+              </Routes>
+            </CartProvider>
           </AuthProvider>
         </ThemeProvider>
       </BrowserRouter>

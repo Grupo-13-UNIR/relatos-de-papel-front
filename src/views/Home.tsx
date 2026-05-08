@@ -14,14 +14,12 @@ export default function Home() {
                 Tu librería digital de confianza
               </h1>
               <p className="text-xl text-muted-foreground mb-8 max-w-xl">
-                Descubre miles de libros físicos y digitales. Compra desde cualquier lugar y recibe tus
-                lecturas favoritas al instante.
+                Descubre miles de libros físicos y digitales. Compra desde cualquier lugar y recibe
+                tus lecturas favoritas al instante.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" className="text-lg px-8">
-                <Link to="/catalogue">
-                  Explorar Catálogo
-                </Link>
+                  <Link to="/catalogue">Explorar Catálogo</Link>
                 </Button>
                 {/* ToDo: hide if already logged in  */}
                 <Button size="lg" variant="outline" className="text-lg px-8">
@@ -42,7 +40,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Features/>
+      <Features />
     </>
   );
 }
