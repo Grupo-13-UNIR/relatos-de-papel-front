@@ -1,12 +1,13 @@
 import { useParams } from 'react-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { bookService } from '@/services/book-service.ts';
-import type { Book } from '@/types/book.ts';
 import NotFound from '@/views/NotFound.tsx';
 import { useCart } from '@/context/cart/CartContext.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { categoryLabels } from '@/translations/category.ts';
+import Loader from '@/components/loader.tsx';
+import useQuery from '@/hooks/useQuery.tsx';
 
 const BookDetailEntry = ({
   label,
@@ -20,27 +21,20 @@ const BookDetailEntry = ({
     <p>{value ?? 'No Disponible'}</p>
   </div>
 );
+
 export const BookDetail = () => {
   const { id } = useParams();
-  const [book, setBook] = useState<Book | undefined>();
-  const [loading, setLoading] = useState(false);
   const { cart, updateCart } = useCart();
+  const {
+    result: book,
+    loading,
+    execute,
+  } = useQuery(() => bookService.getBook(Number(id)), {
+    toastConfiguration: { showError: true },
+  });
 
   useEffect(() => {
-    const getBook = async () => {
-      setLoading(true);
-
-      if (!id) {
-        setLoading(false);
-        return;
-      }
-
-      const result = await bookService.getBook(Number(id));
-      setBook(result);
-      setLoading(false);
-    };
-
-    getBook();
+    execute();
   }, [id]);
 
   const quantityInCart = useMemo(() => {
@@ -64,7 +58,11 @@ export const BookDetail = () => {
   }, [book]);
 
   if (loading) {
-    return <span className="text-sm text-muted-foreground">Cargando...</span>;
+    return (
+      <div className="flex flex-1 justify-center items-center h-full">
+        <Loader description="Cargando..." />
+      </div>
+    );
   }
 
   if (!book) {

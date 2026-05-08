@@ -28,7 +28,6 @@ export const bookService = {
     pageSize: number = 10,
     page: number = 1
   ): Promise<Page<BookShortened>> => {
-    console.log({ filters });
     const books = bookMock
       .filter((book) => bookMatches(book, filters))
       .slice((page - 1) * pageSize, page * pageSize);

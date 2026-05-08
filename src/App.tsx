@@ -17,6 +17,7 @@ import Success from '@/views/checkoutSuccess.tsx';
 
 import { CartProvider } from '@/context/cart/CartProvider.tsx';
 import { BookDetail } from '@/views/BookDetail.tsx';
+import { Toaster } from '@/components/ui/sonner.tsx';
 
 interface RouteElement {
   path: string;
@@ -71,11 +72,15 @@ const routeElements: RouteElement[] = [
     path: '/success',
     component: <Success />,
   },
-   {
-
+  {
     path: '/books/:id',
     component: <BookDetail />,
     showSearch: true,
+  },
+  {
+    path: '*',
+    component: <NotFound />,
+    showSearch: false,
   },
 ];
 
@@ -101,6 +106,7 @@ function App() {
         <ThemeProvider storageKey="ui-theme">
           <AuthProvider>
             <CartProvider>
+              <Toaster position="top-right" />
               <Routes>
                 {routeElements.map((route) => (
                   <Route
@@ -122,14 +128,6 @@ function App() {
                     index={route.index}
                   />
                 ))}
-                <Route
-                  path="*"
-                  element={
-                    <ViewLayout showSearch={false}>
-                      <NotFound />
-                    </ViewLayout>
-                  }
-                />
               </Routes>
             </CartProvider>
           </AuthProvider>

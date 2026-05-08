@@ -6,7 +6,7 @@ import type { Pageable } from '@/types/pagination.ts';
 interface CatalogueContextType {
   books: BookShortened[];
   loading: boolean;
-  error: Error | null;
+  error: Error | undefined;
   filters: BookFilters;
   setFilters: (filters: BookFilters) => void;
   pageable: Pageable;

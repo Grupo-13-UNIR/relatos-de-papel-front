@@ -1,6 +1,7 @@
 import { NavigationBar } from '@/components/navigation-bar.tsx';
 import type { ReactNode } from 'react';
 import Footer from '@/components/footer';
+import { Toaster } from '@/components/ui/sonner.tsx';
 
 export function ViewLayout({ showSearch, children }: { showSearch: boolean; children: ReactNode }) {
   return (

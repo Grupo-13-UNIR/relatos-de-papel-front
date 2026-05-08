@@ -1,32 +1,32 @@
 import { useState, type ReactNode, useEffect } from 'react';
-import { BookCategory, type BookShortened } from '@/types/book.ts';
+import { BookCategory } from '@/types/book.ts';
 import type { BookFilters } from '@/types/catalogue.ts';
 import type { Pageable } from '@/types/pagination.ts';
 import { useSearchParams } from 'react-router';
 import { bookService } from '@/services/book-service.ts';
 import { CatalogueContext } from '@/context/catalogue/CatalogueContext.tsx';
+import useQuery from '@/hooks/useQuery.tsx';
 
 export const CatalogueProvider = ({ children }: { children: ReactNode }) => {
-  const [books, setBooks] = useState<BookShortened[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
   const [filters, setFilters] = useState<BookFilters>({});
   const [pageable, setPageable] = useState<Pageable>({ page: 1, pageSize: 10 });
   const [totalCount, setTotalCount] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const search = async (bookFilters: BookFilters, newPageable: Pageable) => {
-    setLoading(true);
-    try {
-      const result = await bookService.search(bookFilters, newPageable.pageSize, newPageable.page);
-      setBooks(result.content);
-      setTotalCount(result.total);
-    } catch (error) {
-      setError(error as Error);
-    } finally {
-      setLoading(false);
-    }
+    const result = await bookService.search(bookFilters, newPageable.pageSize, newPageable.page);
+    setTotalCount(result.total);
+    return result.content;
   };
+
+  const {
+    result: books,
+    loading,
+    error,
+    execute,
+  } = useQuery(() => search(filters, pageable), {
+    toastConfiguration: { showError: true },
+  });
 
   useEffect(() => {
     const filtersFromParams: BookFilters = {};
@@ -43,7 +43,7 @@ export const CatalogueProvider = ({ children }: { children: ReactNode }) => {
     const pageSize = Number(searchParams.get('pageSize') ?? 10);
     setFilters(filtersFromParams);
     setPageable({ page, pageSize });
-    search(filtersFromParams, { page, pageSize });
+    execute();
   }, [searchParams]);
 
   const updateSearchParams = () => {
@@ -67,7 +67,7 @@ export const CatalogueProvider = ({ children }: { children: ReactNode }) => {
   return (
     <CatalogueContext.Provider
       value={{
-        books,
+        books: books ?? [],
         loading,
         filters,
         error,
