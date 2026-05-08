@@ -1,10 +1,10 @@
-import { useCart } from '@/context/cart/CartContext';
-import { Button } from '@/components/ui/button';
-import { useMemo } from 'react';
-import { Input } from '@/components/ui/input.tsx';
+import { useCart } from "@/context/cart/CartContext";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
 
 const Cart = () => {
-  const { cart, updateCart } = useCart();
+  const { items, removeItem, updateQuantity } = useCart();
+  const navigate = useNavigate();
 
   const cartItems = useMemo(() => Object.values(cart), [cart]);
   const total = useMemo(
@@ -44,6 +44,14 @@ const Cart = () => {
       ))}
 
       <h2>Total: {total.toFixed(2)}€</h2>
+
+      {items.length > 0 && (
+        <div style={{ marginTop: "2rem" }}>
+          <Button onClick={() => navigate("/checkout")}>
+            Comprar ahora
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

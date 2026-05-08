@@ -12,6 +12,9 @@ import Profile from '@/views/Profile/Profile';
 import Register from '@/views/Register.tsx';
 import { type JSX, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
+import Checkout from '@/views/checkout.tsx';
+import Success from '@/views/checkoutSuccess.tsx';
+
 import { CartProvider } from '@/context/cart/CartProvider.tsx';
 import { BookDetail } from '@/views/BookDetail.tsx';
 
@@ -60,6 +63,13 @@ const routeElements: RouteElement[] = [
     showSearch: true,
   },
   {
+    path: '/checkout',
+    component: <Checkout />,
+    showSearch: true,
+  },
+  {
+    path: '/success',
+    component: <Success />,
     path: '/books/:id',
     component: <BookDetail />,
     showSearch: true,
