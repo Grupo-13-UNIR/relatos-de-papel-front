@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Input } from '@/components/ui/input.tsx';
 import { ProfileAvatar } from '@/components/profile-avatar.tsx';
@@ -7,6 +7,7 @@ import { BookOpen, ShoppingCart } from 'lucide-react';
 import { ModeToggle } from '@/components/mode-toggle';
 import { AuthButtons } from '@/components/auth-buttons';
 import { CartDropdown } from '@/components/cart/cartDropdown';
+import { useDebounce } from '@/hooks/useDebounce';
 
 export interface NavigationBarProps {
   showSearch: boolean;
@@ -18,6 +19,7 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
   const { user, onLogout } = useContext(AuthContext);
 
   const [searchInput, setSearchInput] = useState('');
+  const debouncedSearch = useDebounce(searchInput, 500);
 
   const [showCart, setShowCart] = useState(false);
 
@@ -37,12 +39,11 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
     }, 200);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && searchInput.trim()) {
-      navigate(`/books?title=${encodeURIComponent(searchInput.trim())}`);
-      setSearchInput('');
-    }
-  };
+  useEffect(() => {
+    if (!debouncedSearch) return;
+
+    navigate(`/books?title=${encodeURIComponent(debouncedSearch.trim())}`);
+  }, [debouncedSearch, navigate]);
 
   return (
     <div className="w-full bg-card shadow-md border-b border-border py-4 px-6 flex justify-between items-center">
@@ -57,7 +58,6 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
         <Input
           placeholder="Busca tu producto"
           value={searchInput}
-          onKeyDown={handleKeyDown}
           onChange={(e) => setSearchInput(e.target.value)}
           className="w-full max-w-xs border-border"
         />
