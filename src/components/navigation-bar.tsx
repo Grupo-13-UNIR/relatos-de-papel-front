@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { Input } from '@/components/ui/input.tsx';
 import { ProfileAvatar } from '@/components/profile-avatar.tsx';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
-import { ShoppingCart, Trash } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { ModeToggle } from '@/components/mode-toggle';
 import { AuthButtons } from '@/components/auth-buttons';
 
@@ -16,6 +16,12 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
   const { user, onLogout } = useContext(AuthContext);
   const [searchInput, setSearchInput] = useState('');
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchInput.trim()) {
+      navigate(`/books?title=${encodeURIComponent(searchInput.trim())}`);
+    }
+  };
+
   return (
     <div className="w-full bg-card shadow-md border-b border-border py-4 px-6 flex justify-between items-center">
       <div className="flex items-center gap-2">
@@ -27,12 +33,13 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
         <Input
           placeholder="Busca tu producto"
           value={searchInput}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setSearchInput(e.target.value)}
           className="w-full max-w-xs border-border"
         />
       )}
       <div className="transition-colors">
-        <Link to="/catalogue" className="text-foreground">
+        <Link to="/books" className="text-gray-700">
           Catálogo
         </Link>
       </div>

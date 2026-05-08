@@ -4,6 +4,6 @@ export interface BookFilters {
   title?: string;
   author?: string;
   category?: BookCategory;
-  priceLowerThan?: number;
-  priceGreaterThan?: number;
+  priceMin?: number;
+  priceMax?: number;
 }
