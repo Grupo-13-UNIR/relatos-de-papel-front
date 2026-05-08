@@ -1,59 +1,59 @@
-import { type ChangeEvent, type SubmitEvent, useState } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { type ChangeEvent, type SubmitEvent, useEffect, useState } from 'react';
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import type { BookFilters } from '@/types/catalogue.ts';
+import { useCatalogue } from '@/context/catalogue/CatalogueContext.tsx';
+import { InputRange } from '@/components/input-range.tsx';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select.tsx';
+import { BookCategory } from '@/types/book.ts';
+import { categoryLabels } from '@/translations/category.ts';
 
-interface CatalogueFiltersProps {
-  className?: string;
-  onSearch: (catalogueFilters: BookFilters) => void;
-  loading: boolean;
-}
-
-type NumberFilterKey = 'priceMin' | 'priceMax' | 'publishedYearFrom' | 'publishedYearTo';
-
-const numberFields: NumberFilterKey[] = [
-  'priceMin',
-  'priceMax',
-  'publishedYearFrom',
-  'publishedYearTo',
-];
-
-export const CatalogueFilters = ({ className, onSearch, loading }: CatalogueFiltersProps) => {
+export const CatalogueFilters = () => {
+  const { loading, filters, setFilters } = useCatalogue();
   const [formData, setFormData] = useState<BookFilters>({});
+
+  useEffect(() => {
+    setFormData(filters);
+  }, [filters]);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
-    onSearch(formData);
+    setFilters(formData);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    if (numberFields.includes(name as NumberFilterKey)) {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value === '' ? undefined : Number(value),
-      }));
-      return;
-    }
-
     setFormData((prev) => ({
       ...prev,
       [name]: value === '' ? undefined : value,
     }));
   };
 
+  const onPriceChange = (fromValue: number, toValue: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      priceMin: fromValue,
+      priceMax: toValue,
+    }));
+  };
+
   const onClear = () => {
     setFormData({});
-    onSearch({});
+    setFilters({});
   };
 
   return (
-    <div className={cn('flex h-full min-h-0 flex-col', className)}>
+    <div className="flex h-full min-h-0 flex-col">
       <form onSubmit={handleSubmit} className="flex h-full min-h-0 flex-col">
-        <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+        <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden p-1">
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="title">Titulo</FieldLabel>
@@ -80,57 +80,38 @@ export const CatalogueFilters = ({ className, onSearch, loading }: CatalogueFilt
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="priceMin">Precio minimo</FieldLabel>
-              <Input
-                id="priceMin"
-                name="priceMin"
-                type="number"
-                min={0}
-                step="0.01"
-                placeholder="0.00"
-                value={(formData as Record<string, number | undefined>).priceMin ?? ''}
-                onChange={handleChange}
+              <FieldLabel>Precio</FieldLabel>
+              <InputRange
+                fromValue={formData.priceMin ?? 0}
+                toValue={formData.priceMax ?? 100}
+                minValue={0}
+                maxValue={100}
+                onChange={onPriceChange}
               />
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="priceMax">Precio maximo</FieldLabel>
-              <Input
-                id="priceMax"
-                name="priceMax"
-                type="number"
-                min={0}
-                step="0.01"
-                placeholder="999.99"
-                value={(formData as Record<string, number | undefined>).priceMax ?? ''}
-                onChange={handleChange}
-              />
-            </Field>
-
-            <Field>
-              <FieldLabel htmlFor="publishedYearFrom">Anio publicacion desde</FieldLabel>
-              <Input
-                id="publishedYearFrom"
-                name="publishedYearFrom"
-                type="number"
-                step="1"
-                placeholder="1990"
-                value={(formData as Record<string, number | undefined>).publishedYearFrom ?? ''}
-                onChange={handleChange}
-              />
-            </Field>
-
-            <Field>
-              <FieldLabel htmlFor="publishedYearTo">Anio publicacion hasta</FieldLabel>
-              <Input
-                id="publishedYearTo"
-                name="publishedYearTo"
-                type="number"
-                step="1"
-                placeholder="2026"
-                value={(formData as Record<string, number | undefined>).publishedYearTo ?? ''}
-                onChange={handleChange}
-              />
+              <FieldLabel>Categoría</FieldLabel>
+              <Select
+                value={formData.category}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    category: value as BookCategory,
+                  }))
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {Object.values(BookCategory).map((category) => (
+                      <SelectItem value={category}>{categoryLabels[category]}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </Field>
           </FieldGroup>
         </div>
