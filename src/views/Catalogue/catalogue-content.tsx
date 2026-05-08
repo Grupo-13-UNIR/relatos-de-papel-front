@@ -1,21 +1,11 @@
 import { BookSummary } from '@/views/Catalogue/book-summary.tsx';
 import { useCatalogue } from '@/context/catalogue/CatalogueContext.tsx';
-import { useCart } from '@/context/cart/CartContext.tsx';
 import { useNavigate } from 'react-router';
 import type { BookShortened } from '@/types/book.ts';
 
 export const CatalogueContent = () => {
   const { books, error } = useCatalogue();
-  const { cart, updateCart } = useCart();
   const navigate = useNavigate();
-
-  const onAddToCart = (book: BookShortened) => {
-    updateCart(book, 1);
-  };
-
-  const onRemoveFromCart = (book: BookShortened) => {
-    updateCart(book, 0);
-  };
 
   const onClickBook = (book: BookShortened) => {
     navigate('/books/' + book.id);
@@ -29,10 +19,7 @@ export const CatalogueContent = () => {
             <div key={book.id} className="w-72">
               <BookSummary
                 book={book}
-                cartQuantity={cart[book.id]?.quantity ?? 0}
                 onClick={onClickBook}
-                onAddToCart={onAddToCart}
-                onRemoveFromCart={onRemoveFromCart}
               />
             </div>
           ))}

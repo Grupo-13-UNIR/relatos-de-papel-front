@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { Input } from '@/components/ui/input.tsx';
 import { ProfileAvatar } from '@/components/profile-avatar.tsx';
 import { AuthContext } from '@/context/auth/AuthContext.tsx';
-import { ShoppingCart } from 'lucide-react';
+import { BookOpen, ShoppingCart } from 'lucide-react';
 import { ModeToggle } from '@/components/mode-toggle';
 import { AuthButtons } from '@/components/auth-buttons';
 import { CartDropdown } from '@/components/cart/cartDropdown';
@@ -35,18 +35,20 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
     timeoutRef.current = window.setTimeout(() => {
       setShowCart(false);
     }, 200);
-    
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && searchInput.trim()) {
       navigate(`/books?title=${encodeURIComponent(searchInput.trim())}`);
+      setSearchInput('');
     }
   };
 
   return (
     <div className="w-full bg-card shadow-md border-b border-border py-4 px-6 flex justify-between items-center">
-      
       <div className="flex items-center gap-2">
-        <Link to="/" className="text-xl font-bold text-foreground">
+        <Link to="/" className="text-xl font-bold text-foreground flex items-center">
+          <BookOpen className="size-6 text-primary mr-2" />
           Relatos de Papel
         </Link>
       </div>
@@ -72,10 +74,7 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div
-          onClick={() => navigate('/cart')}
-          className="relative"
-        >
+        <div onClick={() => navigate('/cart')} className="relative">
           <ShoppingCart className="w-6 h-6 text-gray-700" />
         </div>
 
@@ -100,4 +99,3 @@ export const NavigationBar = ({ showSearch }: NavigationBarProps) => {
     </div>
   );
 };
-}

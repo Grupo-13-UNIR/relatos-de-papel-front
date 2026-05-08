@@ -19,7 +19,7 @@ export default function Home() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" className="text-lg px-8">
-                  <Link to="/catalogue">Explorar Catálogo</Link>
+                  <Link to="/books">Explorar Catálogo</Link>
                 </Button>
                 {/* ToDo: hide if already logged in  */}
                 <Button size="lg" variant="outline" className="text-lg px-8">

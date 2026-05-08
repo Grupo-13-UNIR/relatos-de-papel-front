@@ -108,7 +108,7 @@ export const BookDetail = () => {
                   onClick={() => updateCart(book, quantityInCart + 1)}
                   disabled={quantityInCart >= book.stock}
                 >
-                  Anadir al carrito
+                  Añadir al carrito
                 </Button>
 
                 <Button
