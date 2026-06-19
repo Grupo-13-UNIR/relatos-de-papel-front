@@ -1,6 +1,7 @@
 import { NavigationBar } from '@/components/navigation-bar.tsx';
 import type { ReactNode } from 'react';
 import Footer from '@/components/footer';
+import Chat from '@/views/Chat';
 
 export function ViewLayout({
   showSearch,
@@ -17,6 +18,7 @@ export function ViewLayout({
         <NavigationBar showSearch={showSearch} />
       </header>
       <main className="flex-1">{children}</main>
+      <Chat />
       <Footer fullFooter={fullFooter} />
     </div>
   );
