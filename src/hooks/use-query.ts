@@ -9,7 +9,7 @@ interface UseQueryConfiguration<T> {
   };
 }
 
-const useQuery = <T,>(query: () => Promise<T>, config: UseQueryConfiguration<T>) => {
+const useQuery = <T>(query: () => Promise<T>, config: UseQueryConfiguration<T>) => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<T | undefined>();
   const [error, setError] = useState<Error | undefined>();

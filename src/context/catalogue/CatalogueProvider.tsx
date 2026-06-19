@@ -5,7 +5,7 @@ import type { Pageable } from '@/types/pagination.ts';
 import { useSearchParams } from 'react-router';
 import { bookService } from '@/services/book-service.ts';
 import { CatalogueContext } from '@/context/catalogue/CatalogueContext.tsx';
-import useQuery from '@/hooks/useQuery.tsx';
+import useQuery from '@/hooks/use-query';
 
 export const CatalogueProvider = ({ children }: { children: ReactNode }) => {
   const [filters, setFilters] = useState<BookFilters>({});

@@ -1,5 +1,5 @@
-import { CheckoutForm } from '@/components/checkout/checkoutForm';
-import { OrderSummary } from '@/components/checkout/orderSummary';
+import { CheckoutForm } from '@/components/checkout/checkout-form';
+import { OrderSummary } from '@/components/checkout/order-summary';
 import { useCart } from '@/context/cart/CartContext';
 
 const Checkout = () => {
@@ -10,14 +10,7 @@ const Checkout = () => {
   }
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '2fr 1fr',
-        gap: '2rem',
-        padding: '2rem',
-      }}
-    >
+    <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8 p-8">
       <CheckoutForm />
 
       <OrderSummary cart={cart} />
